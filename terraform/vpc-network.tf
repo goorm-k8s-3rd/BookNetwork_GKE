@@ -24,6 +24,20 @@ module "vpc" {
       {
         range_name    = "subnet-01-pods"
         ip_cidr_range = "10.20.0.0/16"
+      },
+      {
+        range_name    = "subnet-01-services"
+        ip_cidr_range = "10.21.0.0/16"
+      }
+    ]
+    subnet_02 = [
+      {
+        range_name    = "subnet-02-pods"
+        ip_cidr_range = "10.22.0.0/16"
+      },
+      {
+        range_name    = "subnet-02-services"
+        ip_cidr_range = "10.23.0.0/16"
       }
     ]
   }
