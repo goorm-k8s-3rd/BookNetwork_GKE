@@ -1,3 +1,11 @@
+data "google_client_config" "default" {}
+
+provider "kubernetes" {
+  host                   = "https://${module.gke.endpoint}"
+  token                  = data.google_client_config.default.access_token
+  cluster_ca_certificate = base64decode(module.gke.ca_certificate)
+}
+
 resource "google_storage_bucket" "default" {
   name          = "k8s-standard-bucket-tfstate"
   force_destroy = false
@@ -12,4 +20,12 @@ resource "google_storage_bucket" "default" {
   depends_on = [
     google_project_iam_member.default
   ]
+}
+
+module "gke" {
+  source = "terraform-google-modules/kubernetes-engine/google"
+  project_id = var.project_id
+  name = var.cluster_name
+  region = var.region
+  zones = 
 }

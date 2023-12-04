@@ -33,5 +33,17 @@ variable "network" {
   default     = "gke-network"
 }
 
+variable "subnetwork" {
+  type        = string
+  description = "subnetwork"
+  default     = "gke-subnet"
+}
+
+variable "zones" {
+  type        = list(string)
+  description = "to host cluster in"
+  default     = "value"
+}
+
 
 # 변수를 정의한다. 정의한 변수에 값을 주입하기 위해서는 terraform.tfvars 파일을 이용한다.
