@@ -42,7 +42,7 @@ variable "subnetwork" {
 variable "zones" {
   type        = list(string)
   description = "to host cluster in"
-  default     = "value"
+  default     = ["asia-northeast3-a", "asia-northeast3-b", "asia-northeast3-c"]
 }
 
 

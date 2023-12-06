@@ -23,9 +23,10 @@ resource "google_storage_bucket" "default" {
 }
 
 module "gke" {
-  source = "terraform-google-modules/kubernetes-engine/google"
+  source     = "terraform-google-modules/kubernetes-engine/google"
   project_id = var.project_id
-  name = var.cluster_name
-  region = var.region
-  zones = 
+  name       = var.cluster_name
+  region     = var.region
+  zones      = var.zones
+
 }
