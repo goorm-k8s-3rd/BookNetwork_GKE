@@ -6,15 +6,11 @@ module "vpc" {
   routing_mode = "GLOBAL"
   subnets = [
     {
-      subnet_name   = "subnet-01"
-      subnet_ip     = "10.10.10.0/24"
-      subnet_region = var.region
-    },
-    {
-      subnet_name           = "subnet-02"
+      subnet_name           = "subnet-01"
       subnet_ip             = "10.10.20.0/24"
       subnet_region         = var.region
       subnet_private_access = "true"
+      subnet_flow_logs      = true
       description           = "For private subnet"
     }
   ]
@@ -22,22 +18,12 @@ module "vpc" {
   secondary_ranges = {
     subnet-01 = [
       {
-        range_name    = "subnet-01-pods"
+        range_name    = var.ip_range_pods_name
         ip_cidr_range = "10.20.0.0/16"
       },
       {
-        range_name    = "subnet-01-services"
+        range_name    = var.ip_range_services_name
         ip_cidr_range = "10.21.0.0/16"
-      }
-    ],
-    subnet_02 = [
-      {
-        range_name    = "subnet-02-pods"
-        ip_cidr_range = "10.22.0.0/16"
-      },
-      {
-        range_name    = "subnet-02-services"
-        ip_cidr_range = "10.23.0.0/16"
       }
     ]
   }
