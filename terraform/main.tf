@@ -23,10 +23,24 @@ resource "google_storage_bucket" "default" {
 }
 
 module "gke" {
-  source     = "terraform-google-modules/kubernetes-engine/google"
-  project_id = var.project_id
-  name       = var.cluster_name
-  region     = var.region
-  zones      = var.zones
+  source                     = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster"
+  project_id                 = var.project_id
+  name                       = var.cluster_name
+  region                     = var.region
+  zones                      = var.zones
+  network                    = module.vpc.network_name
+  subnetwork                 = module.vpc.subnets_names
+  ip_range_pods              = module.vpc.subnets_self_links[0]
+  ip_range_services          = abs()
+  http_load_balancing        = true
+  network_policy             = true
+  horizontal_pod_autoscaling = true
+  filestore_csi_driver       = false
+  enable_private_endpoint    = true
+  enable_private_nodes       = true
+  master_ipv4_cidr_block     = "10.0.0.0/28"
 
+  node_pools = [
+
+  ]
 }

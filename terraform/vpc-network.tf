@@ -29,7 +29,7 @@ module "vpc" {
         range_name    = "subnet-01-services"
         ip_cidr_range = "10.21.0.0/16"
       }
-    ]
+    ],
     subnet_02 = [
       {
         range_name    = "subnet-02-pods"

@@ -45,5 +45,4 @@ variable "zones" {
   default     = ["asia-northeast3-a", "asia-northeast3-b", "asia-northeast3-c"]
 }
 
-
 # 변수를 정의한다. 정의한 변수에 값을 주입하기 위해서는 terraform.tfvars 파일을 이용한다.
