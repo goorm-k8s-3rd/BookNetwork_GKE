@@ -6,22 +6,6 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.gke.ca_certificate)
 }
 
-resource "google_storage_bucket" "default" {
-  name          = "k8s-standard-bucket-tfstate"
-  force_destroy = false
-  location      = "ASIA-NORTHEAST3"
-  storage_class = "STANDARD"
-  versioning {
-    enabled = true
-  }
-  encryption {
-    default_kms_key_name = google_kms_crypto_key.terraform_state_bucket.id
-  }
-  depends_on = [
-    google_project_iam_member.default
-  ]
-}
-
 module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster"
   project_id                 = var.project_id
@@ -29,7 +13,7 @@ module "gke" {
   region                     = var.region
   zones                      = var.zones
   network                    = module.vpc.network_name
-  subnetwork                 = module.vpc.subnet_name
+  subnetwork                 = module.vpc.subnets_names[0]
   ip_range_pods              = var.ip_range_pods_name
   ip_range_services          = var.ip_range_services_name
   http_load_balancing        = true
@@ -54,7 +38,7 @@ module "gke" {
       logging_variant = "DEFAULT"
       auto_repair     = true
       auto_upgrade    = true
-      service_account = "${var.cluster_name}@${var.project_id}.iam.gserviceaccount.com"
+      service_account = "k8s-standard-architecture@${var.project_id}.iam.gserviceaccount.com"
     }
   ]
 
@@ -85,7 +69,7 @@ module "gke" {
     }
   }
 
-  node_pools_taint = {
+  node_pools_taints = {
     all = []
 
     default-node-pool = [
@@ -98,7 +82,7 @@ module "gke" {
   }
 
   node_pools_tags = {
-    all = {}
+    all = []
 
     default-node-pool = [
       "default-node-pool",
