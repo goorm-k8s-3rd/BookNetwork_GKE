@@ -25,6 +25,7 @@ module "gke" {
   ip_range_pods              = var.ip_range_pods_name
   ip_range_services          = var.ip_range_services_name
   http_load_balancing        = true
+  private_cluster_config     = true
   network_policy             = true
   horizontal_pod_autoscaling = true
   filestore_csi_driver       = false
