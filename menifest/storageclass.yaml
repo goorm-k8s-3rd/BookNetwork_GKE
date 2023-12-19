@@ -6,5 +6,5 @@ provisioner: kubernetes.io/gce-pd
 volumeBindingMode: WaitForFirstConsumer
 reclaimPolicy: Delete
 parameters:
-  type: pd-standar
-  replication-type: none
+  type: pd-standard
+  replication-type: none # 단일 zone에서 사용

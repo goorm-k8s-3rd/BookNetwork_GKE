@@ -13,3 +13,7 @@ if gsutil ls -p $PROJECT_ID gs://$BUCKET_NAME 2>&1 | grep -q 'NotFound'; then
 else
     echo "Bucket $BUCKET_NAME already exists."
 fi
+
+terraform init
+terraform plan
+terraform apply -auto-approve
