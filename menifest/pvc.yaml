@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: efs-pvc
+  name: pd-pvc
 spec:
   resources:
     requests:
       storage: 1Gi
   accessModes:
     - ReadWriteMany
-  storageClassName: efs-sc
+  storageClassName: pd-sc

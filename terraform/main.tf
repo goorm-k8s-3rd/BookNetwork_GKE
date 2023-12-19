@@ -6,6 +6,14 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.gke.ca_certificate)
 }
 
+resource "google_service_account" "default" {
+  # google_service_account 리소스의 account_id에는 서비스 계정의 전체 이메일 주소가 아니라 고유 ID 부분만 포함해야 한다.
+  account_id   = "k8s-standard-architecture"
+  project      = var.project_id
+  display_name = "K8s Standard Architecture Service Account"
+  description  = "Service account for K8s standard architecture"
+}
+
 module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster"
   project_id                 = var.project_id
@@ -20,15 +28,16 @@ module "gke" {
   network_policy             = true
   horizontal_pod_autoscaling = true
   filestore_csi_driver       = false
-  enable_private_endpoint    = true
+  enable_private_endpoint    = false
   enable_private_nodes       = true
   master_ipv4_cidr_block     = "10.0.0.0/28"
+  deletion_protection        = false # Terraform 등 다른 방법으로 클러스터가 삭제되는 것을 허용하지 않는다면 true로 설정
 
   node_pools = [
     {
       name            = "default-node-pool"
       machine_type    = "e2-standard-4"
-      node_locations  = "asia-northeast3-b, asia-northeast3-c"
+      node_locations  = "asia-northeast3-b,asia-northeast3-c"
       min_count       = 2
       max_count       = 5
       disk_size_gb    = 30
@@ -89,5 +98,5 @@ module "gke" {
     ]
   }
 
-  depends_on = [module.vpc]
+  depends_on = [module.vpc, google_service_account.default]
 }

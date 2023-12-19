@@ -1,11 +1,10 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: efs-sc
+  name: pd-sc
 provisioner: kubernetes.io/gce-pd
 volumeBindingMode: WaitForFirstConsumer
 reclaimPolicy: Delete
 parameters:
-  type: pd-standard
-  fileSystemId: fs-046fc26e91f93b2c1
-  directoryPerms: "700"
+  type: pd-standar
+  replication-type: none
