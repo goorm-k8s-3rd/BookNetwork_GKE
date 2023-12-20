@@ -1,10 +1,11 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: pd-sc
-provisioner: kubernetes.io/gce-pd
+  name: nfs-sc
+provisioner: nfs-client-provisioner
 volumeBindingMode: WaitForFirstConsumer
 reclaimPolicy: Delete
 parameters:
   type: pd-standard
   replication-type: none # 단일 zone에서 사용
+  archiveOnDelete: "false"

@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pd-pvc
+  name: fs-pvc
 spec:
   resources:
     requests:
       storage: 1Gi
   accessModes:
     - ReadWriteMany
-  storageClassName: pd-sc
+  storageClassName: nfs-sc
