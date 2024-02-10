@@ -5,15 +5,21 @@ metadata:
   labels:
     tier: backend
     name: back-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
 spec:
+  defaultBackend:
+    service:
+      name: back-service
+      port:
+        number: 80
   rules:
-  - host: <Host>
-    http:
+  - http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: <Service>
+            name: back-service
             port: 
-              number: <Port>
+              number: 80
