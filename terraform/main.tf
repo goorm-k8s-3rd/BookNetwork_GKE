@@ -37,9 +37,9 @@ module "gke" {
     {
       name            = "default-node-pool"
       machine_type    = "e2-standard-4"
-      node_locations  = "asia-northeast3-b,asia-northeast3-c"
-      min_count       = 2
-      max_count       = 5
+      node_locations  = "asia-northeast3-a,asia-northeast3-b,asia-northeast3-c"
+      min_count       = 1
+      max_count       = 3
       disk_size_gb    = 30
       spot            = false
       image_type      = "COS_CONTAINERD"
